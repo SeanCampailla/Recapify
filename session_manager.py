@@ -12,7 +12,7 @@ class SessionManager:
 
     async def get_session(self, chat_id):
         if chat_id not in self.sessions:
-            self.sessions[chat_id] = await UserSession.create(chat_id)  # Usa solo questa linea
+            self.sessions[chat_id] = await UserSession.create(chat_id) 
         return self.sessions[chat_id]
 
     def clear_all_sessions(self):
