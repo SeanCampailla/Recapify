@@ -1,8 +1,4 @@
 #session_manager.py
-
-# creazione logica gestione chiusura user_session
-# sistemare problema con database
-
 from user_session import UserSession
 
 class SessionManager:
