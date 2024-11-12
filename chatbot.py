@@ -1,6 +1,4 @@
-
 # chatbot.py
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -10,15 +8,10 @@ from localization import LANGUAGES
 from session_manager import SessionManager
 from telethon import TelegramClient, events, Button
 
-
 # Configurazione del logger
 logger = logging.getLogger("bot")
 logger.setLevel(logging.DEBUG)
 logging.basicConfig(level=logging.INFO)
-
-# Da sistemare l'inoltro delle preference appena cambiate
-# Da sistemare l'ui per preference
-
 
 class TelegramBot:
     def __init__(self):
@@ -98,7 +91,6 @@ class TelegramBot:
         language = await user_session.get_preference("Lingua") or 'it'
         localization = LANGUAGES.get(language, LANGUAGES['it'])
         welcome_text = localization.get('main_menu_text', "Benvenuto! Scegli un'opzione dal menu:")
-        # Risponde al comando /start con il menu principale e un messaggio di benvenuto.
         await self.show_menu(event, 'main_menu', welcome_text)
 
     async def handle_summarize_command(self, event):
