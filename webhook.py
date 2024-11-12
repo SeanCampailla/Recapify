@@ -23,8 +23,7 @@ logging.basicConfig(level=logging.INFO)
 def set_webhook():
     public_url = ngrok.connect(8000, bind_tls=True).public_url
     webhook_url = f"{public_url}/webhook"
-    # print(webhook_url)
-
+    
     response = requests.post(
         f"https://api.telegram.org/bot{Config.BOT_TOKEN}/setWebhook",
         json={"url": webhook_url}
@@ -51,7 +50,7 @@ async def handle_error(error):
 
 
 @app.route('/webhook', methods=['POST'])
-async def webhook():  # sistemare gestione creazione sessione utente
+async def webhook(): 
     try:
         data = await request.json
         update = Update(**data)
@@ -110,7 +109,6 @@ async def process_message(message, username, chat_id):
                 file_url = await get_file_url(media.file_id)
                 if file_url:
                     await user_session.add_message(username, media_field, file_url, timestamp, caption)
-                    # logger.info(f'Media {media_field} ricevuto da {username} (chat ID: {chat_id}): {file_url}')
 
 
 async def get_file_url(file_id):
