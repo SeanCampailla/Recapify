@@ -86,14 +86,11 @@ class UserSession:
         if not self.messages:
             logging.warning("Nessun messaggio da analizzare.")
             return
-
-        print(f"Messages content: {self.messages}")
-
-        #eval.start("Summarizer")
+        eval.start("Summarizer")
         try:
             result = await self.nlp.process_messages(self.messages, self.current_summary, self.preferences)
-            #eval.stop("Summarizer")
-            #eval.print_results()
+            eval.stop("Summarizer")
+            eval.print_results()
 
             self.current_summary = result
             self.messages = []
@@ -107,7 +104,7 @@ class UserSession:
         if len(self.messages)>0:
             await self.analyze_messages()
         if self.current_summary == "":
-            return "Non c'è niente da riassumere" # rendere meglio
+            return "Non c'è niente da riassumere" 
         return self.current_summary
 
     # Carica le preferenze della chat dal database
@@ -131,9 +128,8 @@ class UserSession:
         add_summary(self.chat_id, self.current_summary)
 
         eval.stop("Database")
-        # Stampa e salva i risultati del test di performance
         eval.print_results()
-        #eval.save_performance_report_tex("database.tex")
+
         self.daily_messages = []
         logging.info(f"Riassunto giornaliero per chat {self.chat_id} salvato.")
 
