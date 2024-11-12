@@ -80,31 +80,6 @@ class SummaryEvaluator:
         print("\n--- Risultati per ROUGE, BERTScore e Similarità Parole Chiave ---\n")
         print(tabulate(data, headers=["Metric", "Score"], tablefmt="fancy_grid", floatfmt=".4f"))
 
-    @staticmethod
-    def save_fidelity_report_tex(rouge_scores, bert_score, keywords_score, filename="fidelity_report.tex"):
-        """
-        Salva i risultati del test di fedeltà in un formato tabella LaTeX.
-        """
-        with open(filename, "w") as file:
-            file.write("\\begin{table}[h!]\n")
-            file.write("\\centering\n")
-            file.write("\\begin{tabular}{|l|r|}\n")
-            file.write("\\hline\n")
-            file.write("Metrica & Valore \\\\\n")
-            file.write("\\hline\n")
-            file.write(f"ROUGE-1 & {rouge_scores['ROUGE-1']:.4f} \\\\\n")
-            file.write(f"ROUGE-2 & {rouge_scores['ROUGE-2']:.4f} \\\\\n")
-            file.write(f"ROUGE-L & {rouge_scores['ROUGE-L']:.4f} \\\\\n")
-            file.write(f"BERTScore & {bert_score:.4f} \\\\\n")
-            file.write(f"Jaccard Keywords Similarity & {keywords_score:.4f} \\\\\n")
-            file.write("\\hline\n")
-            file.write("\\end{tabular}\n")
-            file.write("\\caption{Risultati dei test di fedeltà con ROUGE, BERTScore e Similarità Parole Chiave}\n")
-            file.write("\\label{tab:fidelity_results}\n")
-            file.write("\\end{table}\n")
-
-        print(f"Risultati dei test di fedeltà salvati in '{filename}'\n")
-
 class PerformanceEvaluator:
     def __init__(self):
         self.results = {}
