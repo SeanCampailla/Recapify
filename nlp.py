@@ -14,7 +14,6 @@ from test_project import SummaryEvaluator, eval
 from unstructured.partition.auto import partition
 
 import shutil
-import aiofiles
 
 
 # Configura il logger
@@ -50,7 +49,7 @@ class NLP:
         self.fidality = SummaryEvaluator(Config.OPENAI_API_KEY)
 
     async def process_messages(self, messages, context, preferences):
-        #eval.start("Analyzer")
+        eval.start("Analyzer")
         print("questo è il contesto: ",context)
         tasks = []
         for message in messages:
@@ -60,7 +59,7 @@ class NLP:
             elif message['type'] in ['video', 'animation', 'video_note']: tasks.append(self._analyze_and_append(message, self.analyze_video, "ha inviato un video"))
             elif message['type'] == 'document': tasks.append(self._analyze_and_append(message, self.analyze_document, "ha inviato un documento"))
         await asyncio.gather(*tasks)
-        #eval.stop("Analyzer")
+        eval.stop("Analyzer")
         return await self.generate_summary(context,preferences)
 
     async def _analyze_and_append(self, message, analysis_func, description):
@@ -80,7 +79,6 @@ class NLP:
                 messages=[{"role": "user", "content": [{"type": "text", "text": prompt}, {"type": "image_url", "image_url": {"url": message["content"]}}]}],
                 max_tokens=200,
             )
-            #print (response.choices[0].message.content)
             return response.choices[0].message.content if response else ""
         except Exception as e:
             logger.error(f"Errore nell'analisi dell'immagine: {e}")
@@ -252,7 +250,6 @@ class NLP:
         return "\n".join([element.text for element in elements if element.text])
 
     async def generate_summary(self, context, preferences):
-        #print(f"Questa è la chat analizzata:\n{self.summary} ")
         original_text = f"{context}\n{self.summary}" if context else self.summary
         language = preferences["Lingua"]
         length = preferences["Lunghezza Riassunto"]
